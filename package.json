@@ -1,0 +1,9 @@
+{
+  "name": "camGrid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "express": "^4.13.1"
+  }
+}
