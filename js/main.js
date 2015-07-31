@@ -2,7 +2,7 @@
 var tr = THREE
 
 var scene = new tr.Scene()
-var camera = new tr.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+var camera = new tr.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000)
 
 var renderer = new tr.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
@@ -52,11 +52,27 @@ function generateTriangle(vertices, material, objectName){
 
 function generateTriangle_new (options) {
   if (!options) {
-    options = {
-      name: 'triangle' + (scene.children.length)
-    , vertices: [[0,0,0],[2,3,0],[4,0,0]]
-    , material: defaultWFPlane
+    options = {}
+  }
+  if (!options.name) {
+    options.name = 'triangle' + (scene.children.length)
+  }
+  if (!options.size) {
+    options.size = 1
+  }
+  if (!options.vertices) {
+    options.vertices = [[0,0,0],[2*options.size,3*options.size,0],[4*options.size,0,0]]
+  }
+  else {
+    for (var i = 0; i < options.vertices.length; i++) {
+      options.vertices[i] = options.vertices[i] * options.size
+      for (var j = 0; j < options.vertices[i].length; j++) {
+        options.vertices[i][j] = options.vertices[i][j] * options.size
+      }
     }
+  }
+  if (!options.material) {
+    options.material = defaultWFPlane
   }
 
   var geometry = new tr.Geometry()
@@ -72,12 +88,8 @@ function generateTriangle_new (options) {
 
   scene.add(triangle)
 }
-generateTriangle_new()
-generateTriangle_new()
-generateTriangle_new()
-generateTriangle_new()
-generateTriangle_new()
-generateTriangle_new()
+generateTriangle_new({vertices:[[0,0,0],[2,3,0],[4,0,0]]})
+generateTriangle_new({name:'triangle1'})
 
 function generateCube(geometry, material, objectName){
   if(!geometry){
@@ -175,6 +187,7 @@ function render(){
 
   // getObject('cube1').rotation.x += 0.01
   // getObject('plane1').rotation.y += 0.01
+  getObject('triangle1').rotation.y += 0.01
 
   renderer.render(scene, camera)
 }
