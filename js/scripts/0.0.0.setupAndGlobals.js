@@ -1,3 +1,4 @@
+// ========== SETUP AND GLOBALS / start ==========
 // SETUP SCENE, CAMERA AND RENDERERS
 var tr = THREE
 
@@ -8,3 +9,8 @@ var renderer = new tr.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
+
+// GLOBAL VARIABLES
+
+
+// ========== SETUP AND GLOBALS / end ============

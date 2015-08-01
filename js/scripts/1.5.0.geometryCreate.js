@@ -1,48 +1,4 @@
-// SETUP SCENE, CAMERA AND RENDERERS
-var tr = THREE
-
-var scene = new tr.Scene()
-var camera = new tr.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000)
-
-var renderer = new tr.WebGLRenderer()
-renderer.setSize(window.innerWidth, window.innerHeight)
-document.body.appendChild(renderer.domElement)
-
-
-// GLOBAL VARIABLES
-
-
-// MODIFY GEOMETRY FUNCTIONS
-function getObject(objectName){
-  for(var i = 0; i < scene.children.length; i++){
-    if(objectName === scene.children[i].name){
-      return scene.children[i]
-    }
-  }
-}
-
-function objNumber(){
-  return scene.children.length + 1
-}
-
-
-// DEFAULT GEOMETRY VALUES
-var defaultWFMaterial = {
-                          color:'rgb(200,200,200)',
-                          opacity:0.5,
-                          transparent:true,
-                          wireframe:true
-                        }
-
-var defaultWFPlane    = {
-                          color:'rgb(200,200,200)',
-                          opacity:0.5,
-                          transparent:true,
-                          wireframe:true,
-                          side:tr.DoubleSide
-                        }
-
-
+// ========== GEOMETRY CREATION / start ==========
 function generateTriangle(vertices, material, objectName){
   if(!vertices){
     vertices = [[0,0,0],[2,3,0],[4,0,0]]
@@ -146,7 +102,7 @@ function generatePlane(geometry, material, objectName){
 }
 
 function generateHex(objName, objSize, objColor, wireOn){
-  var geometry = new tr.Geometry();
+  var geometry = new tr.Geometry()
   geometry.vertices.push(
     new THREE.Vector3(0, 0, 0),
     new THREE.Vector3(2*objSize, 3*objSize, 0),
@@ -155,7 +111,7 @@ function generateHex(objName, objSize, objColor, wireOn){
     new THREE.Vector3(-2*objSize, -3*objSize, 0),
     new THREE.Vector3(-4*objSize, 0, 0),
     new THREE.Vector3(-2*objSize, 3*objSize, 0)
-  );
+  )
   geometry.faces.push(
     new THREE.Face3(0, 1, 2),
     new THREE.Face3(0, 2, 3),
@@ -163,29 +119,12 @@ function generateHex(objName, objSize, objColor, wireOn){
     new THREE.Face3(0, 4, 5),
     new THREE.Face3(0, 5, 6),
     new THREE.Face3(0, 6, 1)
-  );
-  var material = new THREE.MeshBasicMaterial({color:objColor, wireframe:wireOn, side:THREE.DoubleSide});
-  var newGameObject = new THREE.Mesh(geometry, material);
-  newGameObject.name = objName;
-  scene.add(newGameObject);
+  )
+  var material = new THREE.MeshBasicMaterial({color:objColor, wireframe:wireOn, side:THREE.DoubleSide})
+  var newGameObject = new THREE.Mesh(geometry, material)
+  newGameObject.name = objName
+  scene.add(newGameObject)
 }
 
 
-// OBJECT/SCENE GENERATION
-generateHex('hex' + objNumber(), 1, 'rgb(200,200,200)', true)
-
-
-// OBJECT/SCENE MODIFICATION
-camera.position.z = 15
-
-
-// RENDER LOOP
-function render(){
-  requestAnimationFrame(render)
-  
-  getObject('hex1').rotation.y += 0.01
-
-  renderer.render(scene, camera)
-}
-render()
-
+// ========== GEOMETRY CREATION / end ============
