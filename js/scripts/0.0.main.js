@@ -33,30 +33,3 @@ function getObject(objectName){
     }
   }
 }
-
-
-// // OBJECT/SCENE GENERATION
-// generateCube([2,2,2], defaultWFMaterial, 'cube1')
-// generateCube()
-// generatePlane([5,5], defaultWFPlane, 'plane1')
-// generatePlane()
-
-
-// OBJECT/SCENE MODIFICATION
-camera.position.z = 15
-// getObject('cube1').position.y = 2
-// getObject('plane1').position.y = -2
-
-
-// RENDER LOOP
-function render(){
-  requestAnimationFrame(render)
-
-  // getObject('cube1').rotation.x += 0.01
-  // getObject('plane1').rotation.y += 0.01
-  // getObject('triangle1').rotation.y += 0.01
-  getObject('hex1').rotation.y += 0.01
-
-  renderer.render(scene, camera)
-}
-render()
