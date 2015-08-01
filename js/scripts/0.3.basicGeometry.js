@@ -59,8 +59,6 @@ function generateTriangle_new (options) {
 
   scene.add(triangle)
 }
-// generateTriangle_new({vertices:[[0,0,0],[2,3,0],[4,0,0]]})
-// generateTriangle_new({name:'triangle1'})
 
 function generateCube(geometry, material, objectName){
   if(!geometry){
@@ -123,8 +121,7 @@ function generateHex(objName, objSize, objColor, wireOn){
   );
   var material = new THREE.MeshBasicMaterial({color:objColor, wireframe:wireOn, side:THREE.DoubleSide});
   var newGameObject = new THREE.Mesh(geometry, material);
+  objNum = scene.children.length + 1
   newGameObject.name = objName;
   scene.add(newGameObject);
 }
-var objNum = scene.children.length + 1
-generateHex('hex' + objNum, 1, 'rgb(200,200,200)', true)

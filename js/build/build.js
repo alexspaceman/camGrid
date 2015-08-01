@@ -1,3 +1,4 @@
+var objNum = 0
 // SETUP SCENE, CAMERA AND RENDERERS
 var tr = THREE
 
@@ -7,24 +8,6 @@ var camera = new tr.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 
 var renderer = new tr.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
-
-
-// DEFAULT GEOMETRY VALUES
-var defaultWFMaterial = {
-                          color:'rgb(200,200,200)',
-                          opacity:0.5,
-                          transparent:true,
-                          wireframe:true
-                        }
-
-var defaultWFPlane    = {
-                          color:'rgb(200,200,200)',
-                          opacity:0.5,
-                          transparent:true,
-                          wireframe:true,
-                          side:tr.DoubleSide
-                        }
-
 // MODIFY GEOMETRY FUNCTIONS
 function getObject(objectName){
   for(var i = 0; i < scene.children.length; i++){
@@ -94,8 +77,6 @@ function generateTriangle_new (options) {
 
   scene.add(triangle)
 }
-// generateTriangle_new({vertices:[[0,0,0],[2,3,0],[4,0,0]]})
-// generateTriangle_new({name:'triangle1'})
 
 function generateCube(geometry, material, objectName){
   if(!geometry){
@@ -158,30 +139,19 @@ function generateHex(objName, objSize, objColor, wireOn){
   );
   var material = new THREE.MeshBasicMaterial({color:objColor, wireframe:wireOn, side:THREE.DoubleSide});
   var newGameObject = new THREE.Mesh(geometry, material);
+  objNum = scene.children.length + 1
   newGameObject.name = objName;
   scene.add(newGameObject);
 }
-var objNum = scene.children.length + 1
+// OBJECT/SCENE GENERATION
 generateHex('hex' + objNum, 1, 'rgb(200,200,200)', true)
-
-// // OBJECT/SCENE GENERATION
-// generateCube([2,2,2], defaultWFMaterial, 'cube1')
-// generateCube()
-// generatePlane([5,5], defaultWFPlane, 'plane1')
-// generatePlane()
-
 
 // OBJECT/SCENE MODIFICATION
 camera.position.z = 15
-// getObject('cube1').position.y = 2
-// getObject('plane1').position.y = -2
 // RENDER LOOP
 function render(){
   requestAnimationFrame(render)
-
-  // getObject('cube1').rotation.x += 0.01
-  // getObject('plane1').rotation.y += 0.01
-  // getObject('triangle1').rotation.y += 0.01
+  
   getObject('hex1').rotation.y += 0.01
 
   renderer.render(scene, camera)

@@ -1,0 +1,15 @@
+// DEFAULT GEOMETRY VALUES
+var defaultWFMaterial = {
+                          color:'rgb(200,200,200)',
+                          opacity:0.5,
+                          transparent:true,
+                          wireframe:true
+                        }
+
+var defaultWFPlane    = {
+                          color:'rgb(200,200,200)',
+                          opacity:0.5,
+                          transparent:true,
+                          wireframe:true,
+                          side:tr.DoubleSide
+                        }
