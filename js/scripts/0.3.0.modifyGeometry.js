@@ -6,3 +6,8 @@ function getObject(objectName){
     }
   }
 }
+
+function objNumber(){
+  return scene.children.length + 1
+}
+

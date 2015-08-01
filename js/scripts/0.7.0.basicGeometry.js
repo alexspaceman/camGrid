@@ -121,7 +121,7 @@ function generateHex(objName, objSize, objColor, wireOn){
   );
   var material = new THREE.MeshBasicMaterial({color:objColor, wireframe:wireOn, side:THREE.DoubleSide});
   var newGameObject = new THREE.Mesh(geometry, material);
-  objNum = scene.children.length + 1
   newGameObject.name = objName;
   scene.add(newGameObject);
 }
+

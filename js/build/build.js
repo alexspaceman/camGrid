@@ -1,4 +1,3 @@
-var objNum = 0
 // SETUP SCENE, CAMERA AND RENDERERS
 var tr = THREE
 
@@ -8,6 +7,11 @@ var camera = new tr.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 
 var renderer = new tr.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
+
+
+// GLOBAL VARIABLES
+
+
 // MODIFY GEOMETRY FUNCTIONS
 function getObject(objectName){
   for(var i = 0; i < scene.children.length; i++){
@@ -16,6 +20,29 @@ function getObject(objectName){
     }
   }
 }
+
+function objNumber(){
+  return scene.children.length + 1
+}
+
+
+// DEFAULT GEOMETRY VALUES
+var defaultWFMaterial = {
+                          color:'rgb(200,200,200)',
+                          opacity:0.5,
+                          transparent:true,
+                          wireframe:true
+                        }
+
+var defaultWFPlane    = {
+                          color:'rgb(200,200,200)',
+                          opacity:0.5,
+                          transparent:true,
+                          wireframe:true,
+                          side:tr.DoubleSide
+                        }
+
+
 function generateTriangle(vertices, material, objectName){
   if(!vertices){
     vertices = [[0,0,0],[2,3,0],[4,0,0]]
@@ -139,15 +166,19 @@ function generateHex(objName, objSize, objColor, wireOn){
   );
   var material = new THREE.MeshBasicMaterial({color:objColor, wireframe:wireOn, side:THREE.DoubleSide});
   var newGameObject = new THREE.Mesh(geometry, material);
-  objNum = scene.children.length + 1
   newGameObject.name = objName;
   scene.add(newGameObject);
 }
+
+
 // OBJECT/SCENE GENERATION
-generateHex('hex' + objNum, 1, 'rgb(200,200,200)', true)
+generateHex('hex' + objNumber(), 1, 'rgb(200,200,200)', true)
+
 
 // OBJECT/SCENE MODIFICATION
 camera.position.z = 15
+
+
 // RENDER LOOP
 function render(){
   requestAnimationFrame(render)
@@ -157,3 +188,4 @@ function render(){
   renderer.render(scene, camera)
 }
 render()
+

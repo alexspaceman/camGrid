@@ -7,3 +7,4 @@ var camera = new tr.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 
 var renderer = new tr.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
+
