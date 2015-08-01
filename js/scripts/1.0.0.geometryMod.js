@@ -1,6 +1,6 @@
 // ========== GEOMETRY MODIFICATION / start ==========
 // MODIFY GEOMETRY FUNCTIONS
-function getObject(objectName){
+function getObject (objectName) {
   for(var i = 0; i < scene.children.length; i++){
     if(objectName === scene.children[i].name){
       return scene.children[i]
@@ -8,7 +8,7 @@ function getObject(objectName){
   }
 }
 
-function objNumber(){
+function objNumber () {
   return scene.children.length + 1
 }
 

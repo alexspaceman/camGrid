@@ -13,7 +13,7 @@ gulp.task('server', function() {
   gulp.src('./js/server/server.js')
   .pipe(babel())
   .pipe(concat('server.build.js'))
-  .pipe(gulp.dest('./js/build/'))
+  .pipe(gulp.dest('./'))
 })
 
 gulp.task('watch', function() {

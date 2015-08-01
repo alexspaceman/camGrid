@@ -1,6 +1,6 @@
 // ========== RENDER LOOP / start ==========
 // RENDER LOOP
-function render(){
+function render () {
   requestAnimationFrame(render)
 
   getObject('hex1').rotation.y += 0.01

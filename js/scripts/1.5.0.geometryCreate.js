@@ -101,7 +101,7 @@ function generatePlane(geometry, material, objectName){
   scene.add(plane)
 }
 
-function generateHex(objName, objSize, objColor, wireOn){
+function generateHex (objName, objSize, objColor, wireOn) {
   var geometry = new tr.Geometry()
   geometry.vertices.push(
     new THREE.Vector3(0, 0, 0),
