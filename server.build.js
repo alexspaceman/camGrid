@@ -7,13 +7,9 @@ var app = express();
 
 var router = express.Router();
 var apiRouter = express.Router();
+var scriptRouter = express.Router();
 
 var port = process.env.PORT || 80;
-
-var devHost = 'http://localhost';
-var prodHost = 'http://45.55.93.141';
-
-var host = prodHost;
 
 var routerOptions = { root: __dirname };
 
@@ -36,6 +32,7 @@ router.get('/', function (req, res) {
   });
 });
 
+// about
 router.get('/about', function (req, res) {
   res.sendFile('html/about.html', routerOptions, function (err) {
     if (err) {
@@ -45,10 +42,6 @@ router.get('/about', function (req, res) {
       console.log('loaded about');
     }
   });
-});
-
-apiRouter.get('/', function (req, res) {
-  res.send('api page');
 });
 
 // game
@@ -63,7 +56,8 @@ router.get('/game', function (req, res) {
   });
 });
 
-router.get('/js/utils/three.js', function (req, res) {
+// scripts
+scriptRouter.get('/three.js', function (req, res) {
   res.sendFile('js/utils/three.js', routerOptions, function (err) {
     if (err) {
       console.log(err);
@@ -74,7 +68,7 @@ router.get('/js/utils/three.js', function (req, res) {
   });
 });
 
-router.get('/js/build/game.build.js', function (req, res) {
+scriptRouter.get('/game.build.js', function (req, res) {
   res.sendFile('js/build/game.build.js', routerOptions, function (err) {
     if (err) {
       console.log(err);
@@ -85,8 +79,14 @@ router.get('/js/build/game.build.js', function (req, res) {
   });
 });
 
+// api
+apiRouter.get('/', function (req, res) {
+  res.send('api page');
+});
+
 // USER ROUTER
 app.use('/', router);
+app.use('/scripts', scriptRouter);
 app.use('/api', apiRouter);
 
 // START THE SERVER

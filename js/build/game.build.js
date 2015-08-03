@@ -153,6 +153,7 @@ function generatePlane(geometry, material, objectName) {
 
 function generateHex(objName, objSize, objColor, wireOn) {
   var geometry = new tr.Geometry();
+
   geometry.vertices.push(new THREE.Vector3(0, 0, 0), new THREE.Vector3(2 * objSize, 3 * objSize, 0), new THREE.Vector3(4 * objSize, 0, 0), new THREE.Vector3(2 * objSize, -3 * objSize, 0), new THREE.Vector3(-2 * objSize, -3 * objSize, 0), new THREE.Vector3(-4 * objSize, 0, 0), new THREE.Vector3(-2 * objSize, 3 * objSize, 0));
   geometry.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(0, 2, 3), new THREE.Face3(0, 3, 4), new THREE.Face3(0, 4, 5), new THREE.Face3(0, 5, 6), new THREE.Face3(0, 6, 1));
   var material = new THREE.MeshBasicMaterial({ color: objColor, wireframe: wireOn, side: THREE.DoubleSide });

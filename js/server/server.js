@@ -5,13 +5,9 @@ const app = express()
 
 const router = express.Router()
 const apiRouter = express.Router()
+const scriptRouter = express.Router()
 
 const port = process.env.PORT || 80
-
-const devHost = 'http://localhost'
-const prodHost = 'http://45.55.93.141'
-
-let host = prodHost
 
 let routerOptions = { root: __dirname }
 
@@ -37,6 +33,7 @@ router.get('/', (req, res) => {
   })
 })
 
+// about
 router.get('/about', (req, res) => {
   res.sendFile('html/about.html', routerOptions, (err) => {
     if (err) {
@@ -47,10 +44,6 @@ router.get('/about', (req, res) => {
       console.log('loaded about')
     }
   })  
-})
-
-apiRouter.get('/', (req, res) => {
-  res.send(`api page`)
 })
 
 // game
@@ -66,7 +59,8 @@ router.get('/game', (req, res) => {
   })
 })
 
-router.get('/js/utils/three.js', (req, res) => {
+// scripts
+scriptRouter.get('/three.js', (req, res) => {
   res.sendFile('js/utils/three.js', routerOptions, (err) => {
     if (err) {
       console.log(err)
@@ -78,7 +72,7 @@ router.get('/js/utils/three.js', (req, res) => {
   })
 })
 
-router.get('/js/build/game.build.js', (req, res) => {
+scriptRouter.get('/game.build.js', (req, res) => {
   res.sendFile('js/build/game.build.js', routerOptions, (err) => {
     if (err) {
       console.log(err)
@@ -90,9 +84,15 @@ router.get('/js/build/game.build.js', (req, res) => {
   })
 })
 
+// api
+apiRouter.get('/', (req, res) => {
+  res.send(`api page`)
+})
+
 
 // USER ROUTER
 app.use('/', router)
+app.use('/scripts', scriptRouter)
 app.use('/api', apiRouter)
 
 
