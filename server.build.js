@@ -27,6 +27,7 @@ router.get('/', function (req, res) {
       console.log(err);
       res.status(err.status).end();
     } else {
+      console.log(__dirname);
       console.log('loaded index');
     }
   });

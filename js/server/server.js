@@ -28,6 +28,7 @@ router.get('/', (req, res) => {
       res.status(err.status).end()
     }
     else {
+      console.log(__dirname)
       console.log('loaded index')
     }
   })
