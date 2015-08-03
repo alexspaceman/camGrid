@@ -24,26 +24,41 @@ router.use(function (req, res, next) {
 });
 
 // ROUTES
-router.get('/', function (req, res) {
-  res.send('<h1>Spaceman\'s Office</h1><h3>Sitemap</h3><h5><a href="' + host + ':' + port + '/about">About</a></h5>');
-});
-
-router.get('/about', function (req, res) {
-  res.send('<h1>About</h1><h5>This website will house some organizational tools and projects</h5><h5><a href="' + host + ':' + port + '/">Home</a></h5>');
-});
-
-apiRouter.get('/', function (req, res) {
-  res.send('api page');
-});
-
 // index
-router.get('/index', function (req, res) {
+router.get('/', function (req, res) {
   res.sendFile('html/index.html', routerOptions, function (err) {
     if (err) {
       console.log(err);
       res.status(err.status).end();
     } else {
       console.log('loaded index');
+    }
+  });
+});
+
+router.get('/about', function (req, res) {
+  res.sendFile('html/about.html', routerOptions, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(err.status).end();
+    } else {
+      console.log('loaded about');
+    }
+  });
+});
+
+apiRouter.get('/', function (req, res) {
+  res.send('api page');
+});
+
+// game
+router.get('/game', function (req, res) {
+  res.sendFile('html/game.html', routerOptions, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(err.status).end();
+    } else {
+      console.log('loaded game');
     }
   });
 });

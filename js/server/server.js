@@ -24,20 +24,8 @@ router.use((req, res, next) => {
 
 
 // ROUTES
-router.get('/', (req, res) => {
-  res.send(`<h1>Spaceman's Office</h1><h3>Sitemap</h3><h5><a href="${host}:${port}/about">About</a></h5>`)
-})
-
-router.get('/about', (req, res) => {
-   res.send(`<h1>About</h1><h5>This website will house some organizational tools and projects</h5><h5><a href="${host}:${port}/">Home</a></h5>`)  
-})
-
-apiRouter.get('/', (req, res) => {
-  res.send(`api page`)
-})
-
 // index
-router.get('/index', (req, res) => {
+router.get('/', (req, res) => {
   res.sendFile('html/index.html', routerOptions, (err) => {
     if (err) {
       console.log(err)
@@ -45,6 +33,35 @@ router.get('/index', (req, res) => {
     }
     else {
       console.log('loaded index')
+    }
+  })
+})
+
+router.get('/about', (req, res) => {
+  res.sendFile('html/about.html', routerOptions, (err) => {
+    if (err) {
+      console.log(err)
+      res.status(err.status).end()
+    }
+    else {
+      console.log('loaded about')
+    }
+  })  
+})
+
+apiRouter.get('/', (req, res) => {
+  res.send(`api page`)
+})
+
+// game
+router.get('/game', (req, res) => {
+  res.sendFile('html/game.html', routerOptions, (err) => {
+    if (err) {
+      console.log(err)
+      res.status(err.status).end()
+    }
+    else {
+      console.log('loaded game')
     }
   })
 })
