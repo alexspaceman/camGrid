@@ -2,7 +2,7 @@
   "name": "camGrid",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "server.build.js",
   "dependencies": {
     "express": "^4.13.2",
     "gulp": "^3.9.0",
