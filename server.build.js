@@ -10,6 +10,11 @@ var apiRouter = express.Router();
 
 var port = process.env.PORT || 80;
 
+var devHost = 'http://localhost';
+var prodHost = 'http://45.55.93.141';
+
+var host = prodHost;
+
 var routerOptions = { root: __dirname };
 
 // MIDDLEWARE
@@ -20,11 +25,11 @@ router.use(function (req, res, next) {
 
 // ROUTES
 router.get('/', function (req, res) {
-  res.send('<h1>Spaceman\'s Office</h1><h3>Sitemap</h3><h5><a href="http://localhost:' + port + '/about">About</a></h5>');
+  res.send('<h1>Spaceman\'s Office</h1><h3>Sitemap</h3><h5><a href="' + host + ':' + port + '/about">About</a></h5>');
 });
 
 router.get('/about', function (req, res) {
-  res.send('<h1>About</h1><h5>This website will house some organizational tools and projects</h5><h5><a href="http://localhost:' + port + '/">Home</a></h5>');
+  res.send('<h1>About</h1><h5>This website will house some organizational tools and projects</h5><h5><a href="' + host + ':' + port + '/">Home</a></h5>');
 });
 
 apiRouter.get('/', function (req, res) {
