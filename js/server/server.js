@@ -6,7 +6,7 @@ const app = express()
 const router = express.Router()
 const apiRouter = express.Router()
 
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 80
 
 let routerOptions = { root: __dirname }
 

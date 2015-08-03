@@ -8,7 +8,7 @@ var app = express();
 var router = express.Router();
 var apiRouter = express.Router();
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 80;
 
 var routerOptions = { root: __dirname };
 
