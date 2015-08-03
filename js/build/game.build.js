@@ -42,10 +42,24 @@ function objNumber() {
   return scene.children.length + 1;
 }
 
+// GEOMETRY HELPERS
+function hexVertices(options) {
+  if (!options) {
+    options = {};
+  }
+  if (!options.gridCellWidth) {
+    options.gridCellWidth = 1;
+  }
+
+  var vertices = [new tr.Vector3(0, 0, 0), new tr.Vector3(2 * options.gridCellWidth, 3 * options.gridCellWidth, 0), new tr.Vector3(4 * options.gridCellWidth, 0, 0), new tr.Vector3(2 * options.gridCellWidth, -3 * options.gridCellWidth, 0), new tr.Vector3(-2 * options.gridCellWidth, -3 * options.gridCellWidth, 0), new tr.Vector3(-4 * options.gridCellWidth, 0, 0), new tr.Vector3(-2 * options.gridCellWidth, 3 * options.gridCellWidth, 0)];
+
+  return vertices;
+}
+
 // DEFAULT GEOMETRY VALUES
 var defaultWFMaterial = {
   color: 'rgb(200,200,200)',
-  opacity: 0.5,
+  opacity: 1,
   transparent: true,
   wireframe: true,
   side: tr.DoubleSide
@@ -58,6 +72,8 @@ var defaultWFPlane = {
   wireframe: true,
   side: tr.DoubleSide
 };
+
+var hexVerticesValue = hexVertices();
 
 // ========== GEOMETRY MODIFICATION / end ============
 // ========== GEOMETRY CREATION / start ==========
@@ -188,8 +204,11 @@ function generateHex_new(options) {
   if (!options.size) {
     options.size = 1;
   }
+  if (!options.origin) {
+    new tr.Vector3(0, 0, 0);
+  }
   if (!options.vertices) {
-    options.vertices = [new tr.Vector3(0, 0, 0), new tr.Vector3(2 * options.size, 3 * options.size, 0), new tr.Vector3(4 * options.size, 0, 0), new tr.Vector3(2 * options.size, -3 * options.size, 0), new tr.Vector3(-2 * options.size, -3 * options.size, 0), new tr.Vector3(-4 * options.size, 0, 0), new tr.Vector3(-2 * options.size, 3 * options.size, 0)];
+    options.vertices = hexVerticesValue;
   }
   if (!options.material) {
     options.material = defaultWFMaterial;
@@ -209,16 +228,40 @@ function generateHex_new(options) {
 }
 
 // ========== GEOMETRY CREATION / end ============
+// ========== GRID CREATION / start ==========
+'use strict';
+
+var gridHelper = new tr.GridHelper(100, 2);
+scene.add(gridHelper);
+gridHelper.setColors('rgb(250,200,100)', 'rgb(120,120,80)');
+
+var gridSize = 10;
+
+generateHex_new({ name: '0,0' });
+getObjectByName('0,0').rotation.x = toRadians(90);
+// getObjectByName('0,0').rotation.z = toRadians(90)
+// getObjectById(2).translateX(6)
+// getObjectById(2).translateY(-4)
+
+// generateHex_new({name:'1,0'})
+// getObjectById(3).rotation.x = toRadians(90)
+
+// for (let i = 1; i < gridSize; i++) {
+//   let objectId = i + 1
+//   generateHex_new()
+//   getObjectById(objectId).rotation.x = toRadians(90)
+// }
+
+// ========== GRID CREATION / end ============
 // ========== SCENE CREATION / start ==========
 // OBJECT/SCENE GENERATION
-"use strict";
-
-generateHex_new();
 
 // OBJECT/SCENE MODIFICATION
-camera.position.z = 25;
-camera.position.y = 10;
-getObjectById(1).rotation.x = toRadians(90);
+"use strict";
+
+camera.position.z = 5;
+camera.position.y = 35;
+camera.rotation.x = toRadians(-75);
 
 // ========== SCENE CREATION / end ============
 // ========== RENDER LOOP / start ==========

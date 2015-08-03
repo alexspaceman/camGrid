@@ -140,17 +140,11 @@ function generateHex_new (options) {
   if (!options.size) {
     options.size = 1
   }
+  if (!options.origin) {
+    new tr.Vector3(0, 0, 0)
+  }
   if (!options.vertices) {
-    options.vertices =
-      [
-        new tr.Vector3(0, 0, 0)
-      , new tr.Vector3(2 * options.size, 3 * options.size, 0)
-      , new tr.Vector3(4 * options.size, 0, 0)
-      , new tr.Vector3(2 * options.size, -3 * options.size, 0)
-      , new tr.Vector3(-2 * options.size, -3 * options.size, 0)
-      , new tr.Vector3(-4 * options.size, 0, 0)
-      , new tr.Vector3(-2 * options.size, 3 * options.size, 0)
-      ]
+    options.vertices = hexVerticesValue
   }
   if (!options.material) {
     options.material = defaultWFMaterial

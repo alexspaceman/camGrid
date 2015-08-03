@@ -25,8 +25,39 @@ function objNumber () {
 }
 
 
+// GEOMETRY HELPERS
+function hexVertices (options) {
+  if (!options) {
+    options = {}
+  }
+  if (!options.gridCellWidth) {
+    options.gridCellWidth = 1
+  }
+
+  let vertices = [
+    new tr.Vector3(0, 0, 0)
+  , new tr.Vector3(2 * options.gridCellWidth, 3 * options.gridCellWidth, 0)
+  , new tr.Vector3(4 * options.gridCellWidth, 0, 0)
+  , new tr.Vector3(2 * options.gridCellWidth, -3 * options.gridCellWidth, 0)
+  , new tr.Vector3(-2 * options.gridCellWidth, -3 * options.gridCellWidth, 0)
+  , new tr.Vector3(-4 * options.gridCellWidth, 0, 0)
+  , new tr.Vector3(-2 * options.gridCellWidth, 3 * options.gridCellWidth, 0)
+  ]
+
+  return vertices
+}
+
+
 // DEFAULT GEOMETRY VALUES
-let defaultWFMaterial = {
+const defaultWFMaterial = {
+                          color:'rgb(200,200,200)',
+                          opacity:1,
+                          transparent:true,
+                          wireframe:true,
+                          side:tr.DoubleSide
+                        }
+
+const defaultWFPlane    = {
                           color:'rgb(200,200,200)',
                           opacity:0.5,
                           transparent:true,
@@ -34,13 +65,7 @@ let defaultWFMaterial = {
                           side:tr.DoubleSide
                         }
 
-let defaultWFPlane    = {
-                          color:'rgb(200,200,200)',
-                          opacity:0.5,
-                          transparent:true,
-                          wireframe:true,
-                          side:tr.DoubleSide
-                        }
+const hexVerticesValue = hexVertices()
 
 
 // ========== GEOMETRY MODIFICATION / end ============
