@@ -1,11 +1,23 @@
 // ========== GEOMETRY MODIFICATION / start ==========
 // MODIFY GEOMETRY FUNCTIONS
-function getObject (objectName) {
+function getObjectByName (objectName) {
   for(let i = 0; i < scene.children.length; i++){
     if(objectName === scene.children[i].name){
       return scene.children[i]
     }
   }
+}
+
+function getObjectById (objectId) {
+  for(let i = 0; i < scene.children.length; i++){
+    if(objectId === scene.children[i].objId){
+      return scene.children[i]
+    }
+  }
+}
+
+function toRadians (degrees) {
+  return degrees * (Math.PI / 180)
 }
 
 function objNumber () {
@@ -18,7 +30,8 @@ let defaultWFMaterial = {
                           color:'rgb(200,200,200)',
                           opacity:0.5,
                           transparent:true,
-                          wireframe:true
+                          wireframe:true,
+                          side:tr.DoubleSide
                         }
 
 let defaultWFPlane    = {

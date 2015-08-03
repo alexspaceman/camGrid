@@ -18,12 +18,24 @@ document.body.appendChild(renderer.domElement);
 // MODIFY GEOMETRY FUNCTIONS
 'use strict';
 
-function getObject(objectName) {
+function getObjectByName(objectName) {
   for (var i = 0; i < scene.children.length; i++) {
     if (objectName === scene.children[i].name) {
       return scene.children[i];
     }
   }
+}
+
+function getObjectById(objectId) {
+  for (var i = 0; i < scene.children.length; i++) {
+    if (objectId === scene.children[i].objId) {
+      return scene.children[i];
+    }
+  }
+}
+
+function toRadians(degrees) {
+  return degrees * (Math.PI / 180);
 }
 
 function objNumber() {
@@ -35,7 +47,8 @@ var defaultWFMaterial = {
   color: 'rgb(200,200,200)',
   opacity: 0.5,
   transparent: true,
-  wireframe: true
+  wireframe: true,
+  side: tr.DoubleSide
 };
 
 var defaultWFPlane = {
@@ -162,25 +175,61 @@ function generateHex(objName, objSize, objColor, wireOn) {
   scene.add(newGameObject);
 }
 
+function generateHex_new(options) {
+  if (!options) {
+    options = {};
+  }
+  if (!options.name) {
+    options.name = 'hex' + objNumber();
+  }
+  if (!options.id) {
+    options.id = objNumber();
+  }
+  if (!options.size) {
+    options.size = 1;
+  }
+  if (!options.vertices) {
+    options.vertices = [new tr.Vector3(0, 0, 0), new tr.Vector3(2 * options.size, 3 * options.size, 0), new tr.Vector3(4 * options.size, 0, 0), new tr.Vector3(2 * options.size, -3 * options.size, 0), new tr.Vector3(-2 * options.size, -3 * options.size, 0), new tr.Vector3(-4 * options.size, 0, 0), new tr.Vector3(-2 * options.size, 3 * options.size, 0)];
+  }
+  if (!options.material) {
+    options.material = defaultWFMaterial;
+  }
+
+  var geometry = new tr.Geometry();
+
+  geometry.vertices = options.vertices;
+
+  geometry.faces.push(new tr.Face3(0, 1, 2), new tr.Face3(0, 2, 3), new tr.Face3(0, 3, 4), new tr.Face3(0, 4, 5), new tr.Face3(0, 5, 6), new tr.Face3(0, 6, 1));
+
+  var material = new THREE.MeshBasicMaterial(options.material);
+  var newGameObject = new THREE.Mesh(geometry, material);
+  newGameObject.name = options.name;
+  newGameObject.objId = options.id;
+  scene.add(newGameObject);
+}
+
 // ========== GEOMETRY CREATION / end ============
 // ========== SCENE CREATION / start ==========
 // OBJECT/SCENE GENERATION
-'use strict';
+"use strict";
 
-generateHex('hex' + objNumber(), 1, 'rgb(200,200,200)', true);
+generateHex_new();
 
 // OBJECT/SCENE MODIFICATION
-camera.position.z = 15;
+camera.position.z = 25;
+camera.position.y = 10;
+getObjectById(1).rotation.x = toRadians(90);
 
 // ========== SCENE CREATION / end ============
 // ========== RENDER LOOP / start ==========
 // RENDER LOOP
-'use strict';
+"use strict";
 
 function render() {
   requestAnimationFrame(render);
 
-  getObject('hex1').rotation.y += 0.01;
+  // getObjectByName('hex1').rotation.y += 0.01
+  // getObjectById(1).rotation.y += 0.01
 
   renderer.render(scene, camera);
 }

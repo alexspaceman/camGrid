@@ -127,5 +127,54 @@ function generateHex (objName, objSize, objColor, wireOn) {
   scene.add(newGameObject)
 }
 
+function generateHex_new (options) {
+  if (!options) {
+    options = {}
+  }
+  if (!options.name) {
+    options.name = 'hex' + objNumber()
+  }
+  if (!options.id) {
+    options.id = objNumber()
+  }
+  if (!options.size) {
+    options.size = 1
+  }
+  if (!options.vertices) {
+    options.vertices =
+      [
+        new tr.Vector3(0, 0, 0)
+      , new tr.Vector3(2 * options.size, 3 * options.size, 0)
+      , new tr.Vector3(4 * options.size, 0, 0)
+      , new tr.Vector3(2 * options.size, -3 * options.size, 0)
+      , new tr.Vector3(-2 * options.size, -3 * options.size, 0)
+      , new tr.Vector3(-4 * options.size, 0, 0)
+      , new tr.Vector3(-2 * options.size, 3 * options.size, 0)
+      ]
+  }
+  if (!options.material) {
+    options.material = defaultWFMaterial
+  }
+
+  let geometry = new tr.Geometry()
+
+  geometry.vertices = options.vertices
+
+  geometry.faces.push(
+    new tr.Face3(0, 1, 2),
+    new tr.Face3(0, 2, 3),
+    new tr.Face3(0, 3, 4),
+    new tr.Face3(0, 4, 5),
+    new tr.Face3(0, 5, 6),
+    new tr.Face3(0, 6, 1)
+  )
+
+  let material = new THREE.MeshBasicMaterial(options.material)
+  let newGameObject = new THREE.Mesh(geometry, material)
+  newGameObject.name = options.name
+  newGameObject.objId = options.id
+  scene.add(newGameObject)
+}
+
 
 // ========== GEOMETRY CREATION / end ============

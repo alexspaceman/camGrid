@@ -3,7 +3,8 @@
 function render () {
   requestAnimationFrame(render)
 
-  getObject('hex1').rotation.y += 0.01
+  // getObjectByName('hex1').rotation.y += 0.01
+  // getObjectById(1).rotation.y += 0.01
 
   renderer.render(scene, camera)
 }
