@@ -79,51 +79,40 @@ var hexVerticesValue = hexVertices();
 // ========== GEOMETRY CREATION / start ==========
 'use strict';
 
+var _bind = Function.prototype.bind;
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+
 function generateTriangle(vertices, material, objectName) {
-  if (!vertices) {
-    vertices = [[0, 0, 0], [2, 3, 0], [4, 0, 0]];
-  }
+  vertices = vertices || [[0, 0, 0], [2, 3, 0], [4, 0, 0]];
+
   var geometry = new tr.Geometry();
   geometry.vertices.push(new tr.Vector3(vertices[0][0], vertices[0][1], vertices[0][2]));
   geometry.vertices.push(new tr.Vector3(vertices[1][0], vertices[1][1], vertices[1][2]));
   geometry.vertices.push(new tr.Vector3(vertices[2][0], vertices[2][1], vertices[2][2]));
   geometry.faces.push(new tr.Face3(0, 1, 2));
 
-  if (!material) {
-    material = new tr.MeshBasicMaterial(defaultWFPlane);
-  }
+  material = material || new tr.MeshBasicMaterial(defaultWFPlane);
 
   var triangle = new tr.Mesh(geometry, material);
 
-  if (objectName) {
-    triangle.name = objectName;
-  }
+  triangle.name = objectName || 'unknown';
 
   scene.add(triangle);
 }
 
 function generateTriangle_new(options) {
-  if (!options) {
-    options = {};
-  }
-  if (!options.name) {
-    options.name = 'triangle' + scene.children.length;
-  }
-  if (!options.size) {
-    options.size = 1;
-  }
-  if (!options.vertices) {
-    options.vertices = [[0, 0, 0], [2 * options.size, 3 * options.size, 0], [4 * options.size, 0, 0]];
-  } else {
-    for (var i = 0; i < options.vertices.length; i++) {
-      options.vertices[i] = options.vertices[i] * options.size;
-      for (var j = 0; j < options.vertices[i].length; j++) {
-        options.vertices[i][j] = options.vertices[i][j] * options.size;
-      }
+  options = options || {};
+  options.name = options.name || 'triangle' + scene.children.length;
+  options.size = options.size || 1;
+  options.material = options.material || defaultWFPlane;
+  options.vertices = options.vertices || [[0, 0, 0], [2 * options.size, 3 * options.size, 0], [4 * options.size, 0, 0]];
+
+  for (var i = 0; i < options.vertices.length; i++) {
+    options.vertices[i] = options.vertices[i] * options.size;
+    for (var j = 0; j < options.vertices[i].length; j++) {
+      options.vertices[i][j] = options.vertices[i][j] * options.size;
     }
-  }
-  if (!options.material) {
-    options.material = defaultWFPlane;
   }
 
   var geometry = new tr.Geometry();
@@ -141,41 +130,29 @@ function generateTriangle_new(options) {
 }
 
 function generateCube(geometry, material, objectName) {
-  if (!geometry) {
-    geometry = [1, 1, 1];
-  }
-  geometry = new tr.BoxGeometry(geometry[0], geometry[1], geometry[2]);
+  geometry = geometry || [1, 1, 1];
+  geometry = new (_bind.apply(tr.BoxGeometry, [null].concat(_toConsumableArray(geometry))))();
 
-  if (!material) {
-    material = defaultWFMaterial;
-  }
+  material = material || defaultWFMaterial;
   material = new tr.MeshBasicMaterial(material);
 
   var cube = new tr.Mesh(geometry, material);
 
-  if (objectName) {
-    cube.name = objectName;
-  }
+  cube.name = objectName || 'unknown';
 
   scene.add(cube);
 }
 
 function generatePlane(geometry, material, objectName) {
-  if (!geometry) {
-    geometry = [5, 5];
-  }
+  geometry = geometry || [5, 5];
   geometry = new tr.PlaneGeometry(geometry[0], geometry[1]);
 
-  if (!material) {
-    material = defaultWFPlane;
-  }
+  material = material || defaultWFPlane;
   material = new tr.MeshBasicMaterial(material);
 
   var plane = new tr.Mesh(geometry, material);
 
-  if (objectName) {
-    plane.name = objectName;
-  }
+  plane.name = objectName || 'unknown';
 
   scene.add(plane);
 }
@@ -185,7 +162,11 @@ function generateHex(objName, objSize, objColor, wireOn) {
 
   geometry.vertices.push(new THREE.Vector3(0, 0, 0), new THREE.Vector3(2 * objSize, 3 * objSize, 0), new THREE.Vector3(4 * objSize, 0, 0), new THREE.Vector3(2 * objSize, -3 * objSize, 0), new THREE.Vector3(-2 * objSize, -3 * objSize, 0), new THREE.Vector3(-4 * objSize, 0, 0), new THREE.Vector3(-2 * objSize, 3 * objSize, 0));
   geometry.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(0, 2, 3), new THREE.Face3(0, 3, 4), new THREE.Face3(0, 4, 5), new THREE.Face3(0, 5, 6), new THREE.Face3(0, 6, 1));
-  var material = new THREE.MeshBasicMaterial({ color: objColor, wireframe: wireOn, side: THREE.DoubleSide });
+
+  var material = new THREE.MeshBasicMaterial({
+    color: objColor, wireframe: wireOn, side: THREE.DoubleSide
+  });
+
   var newGameObject = new THREE.Mesh(geometry, material);
   newGameObject.name = objName;
   scene.add(newGameObject);
