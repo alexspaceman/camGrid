@@ -3,8 +3,12 @@
 function render () {
   requestAnimationFrame(render)
 
-  // getObjectByName('hex1').rotation.y += 0.01
-  // getObjectById(1).rotation.y += 0.01
+  if (camera.controls.movement.z) camera.position.z -= camera.controls.movement.speed
+  if (camera.controls.movement.z_) camera.position.z += camera.controls.movement.speed
+  if (camera.controls.movement.x) camera.position.x += camera.controls.movement.speed
+  if (camera.controls.movement.x_) camera.position.x -= camera.controls.movement.speed
+  if (camera.controls.movement.y) camera.position.y += camera.controls.movement.speed
+  if (camera.controls.movement.y_) camera.position.y -= camera.controls.movement.speed
 
   renderer.render(scene, camera)
 }

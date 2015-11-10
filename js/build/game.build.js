@@ -11,6 +11,60 @@ var renderer = new tr.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+document.addEventListener("keydown", onDocumentKeyDown, false);
+document.addEventListener("keyup", onDocumentKeyUp, false);
+
+camera.controls = {};
+camera.controls.movement = {};
+
+camera.controls.movement.z = false;
+camera.controls.movement.z_ = false;
+camera.controls.movement.x = false;
+camera.controls.movement.x_ = false;
+camera.controls.movement.y = false;
+camera.controls.movement.y_ = false;
+camera.controls.movement.speed = 0.1;
+
+function onDocumentKeyDown(event) {
+  var keyCode = event.which;
+  console.log(keyCode, 'down');
+
+  switch (keyCode) {
+    case 87:
+      camera.controls.movement.z = true;break; // north
+    case 83:
+      camera.controls.movement.z_ = true;break; // south
+    case 68:
+      camera.controls.movement.x = true;break; // east
+    case 65:
+      camera.controls.movement.x_ = true;break; // west
+    case 81:
+      camera.controls.movement.y = true;break; // up
+    case 69:
+      camera.controls.movement.y_ = true;break; // down
+  }
+}
+
+function onDocumentKeyUp(event) {
+  var keyCode = event.which;
+  console.log(keyCode, 'up');
+
+  switch (keyCode) {
+    case 87:
+      camera.controls.movement.z = false;break; // north
+    case 83:
+      camera.controls.movement.z_ = false;break; // south
+    case 68:
+      camera.controls.movement.x = false;break; // east
+    case 65:
+      camera.controls.movement.x_ = false;break; // west
+    case 81:
+      camera.controls.movement.y = false;break; // up
+    case 69:
+      camera.controls.movement.y_ = false;break; // down
+  }
+}
+
 // GLOBAL VARIABLES
 
 // ========== SETUP AND GLOBALS / end ============
@@ -252,8 +306,12 @@ camera.rotation.x = toRadians(-75);
 function render() {
   requestAnimationFrame(render);
 
-  // getObjectByName('hex1').rotation.y += 0.01
-  // getObjectById(1).rotation.y += 0.01
+  if (camera.controls.movement.z) camera.position.z -= camera.controls.movement.speed;
+  if (camera.controls.movement.z_) camera.position.z += camera.controls.movement.speed;
+  if (camera.controls.movement.x) camera.position.x += camera.controls.movement.speed;
+  if (camera.controls.movement.x_) camera.position.x -= camera.controls.movement.speed;
+  if (camera.controls.movement.y) camera.position.y += camera.controls.movement.speed;
+  if (camera.controls.movement.y_) camera.position.y -= camera.controls.movement.speed;
 
   renderer.render(scene, camera);
 }
