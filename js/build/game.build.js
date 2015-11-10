@@ -29,10 +29,10 @@ camera.controls.movement.y_ = false;
 camera.controls.movement.speed = 0.1;
 
 camera.controls.mouse.leftClick = false;
-camera.controls.mouse.movingX = false;
-camera.controls.mouse.movingY = false;
+camera.controls.mouse.moving = false;
 camera.controls.mouse.movementX = 0;
 camera.controls.mouse.movementY = 0;
+camera.controls.mouse.rotationSpeed = 0.01;
 
 function onDocumentKeyDown(event) {
   var keyCode = event.which;
@@ -91,16 +91,10 @@ function onDocumentMouseUp(event) {
 }
 
 function onDocumentMouseMove(event) {
-  console.log(camera.controls.mouse.movementY, event.movementY);
+  // console.log(event)
   camera.controls.mouse.movementX = event.movementX;
   camera.controls.mouse.movementY = event.movementY;
-  console.log(camera.controls.mouse.movementX, camera.controls.mouse.movementY, 'mouse move');
-
-  if (event.movementX) camera.controls.mouse.movingX = true;else camera.controls.mouse.movingX = false;
-
-  if (event.movementY) camera.controls.mouse.movingY = true;else camera.controls.mouse.movingY = false;
-
-  console.log(camera.controls.mouse.movementX, camera.controls.mouse.movementY, 'mouse move');
+  camera.controls.mouse.moving = true;
 }
 
 // GLOBAL VARIABLES
@@ -352,9 +346,11 @@ function render() {
   if (camera.controls.movement.y_) camera.position.y -= camera.controls.movement.speed;
 
   if (camera.controls.mouse.leftClick) {
-    // console.log('clicking')
-    // if (camera.controls.mouse.movingX) console.log('movingX', camera.controls.mouse.movingX)
-    // if (camera.controls.mouse.movingY) console.log('movingY', camera.controls.mouse.movingY)
+    if (camera.controls.mouse.moving) {
+      camera.rotation.y -= camera.controls.mouse.movementX * camera.controls.mouse.rotationSpeed;
+      camera.rotation.x -= camera.controls.mouse.movementY * camera.controls.mouse.rotationSpeed;
+      camera.controls.mouse.moving = false;
+    }
   }
 
   renderer.render(scene, camera);

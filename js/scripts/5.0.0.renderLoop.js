@@ -11,9 +11,11 @@ function render () {
   if (camera.controls.movement.y_)  camera.position.y -= camera.controls.movement.speed
 
   if (camera.controls.mouse.leftClick) {
-    // console.log('clicking')
-    // if (camera.controls.mouse.movingX) console.log('movingX', camera.controls.mouse.movingX)
-    // if (camera.controls.mouse.movingY) console.log('movingY', camera.controls.mouse.movingY)
+    if (camera.controls.mouse.moving) {
+      camera.rotation.y -= camera.controls.mouse.movementX * camera.controls.mouse.rotationSpeed
+      camera.rotation.x -= camera.controls.mouse.movementY * camera.controls.mouse.rotationSpeed
+      camera.controls.mouse.moving = false
+    }
   }
 
   renderer.render(scene, camera)
