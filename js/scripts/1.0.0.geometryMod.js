@@ -27,12 +27,8 @@ function objNumber () {
 
 // GEOMETRY HELPERS
 function hexVertices (options) {
-  if (!options) {
-    options = {}
-  }
-  if (!options.gridCellWidth) {
-    options.gridCellWidth = 1
-  }
+  options = options || {}
+  options.gridCellWidth = options.gridCellWidth || 1
 
   let vertices = [
     new tr.Vector3(0, 0, 0)
@@ -50,19 +46,19 @@ function hexVertices (options) {
 
 // DEFAULT GEOMETRY VALUES
 const defaultWFMaterial = {
-                          color:'rgb(200,200,200)',
-                          opacity:1,
-                          transparent:true,
-                          wireframe:true,
-                          side:tr.DoubleSide
+                          color:'rgb(200,200,200)'
+                        , opacity:1
+                        , transparent:true
+                        , wireframe:true
+                        , side:tr.DoubleSide
                         }
 
 const defaultWFPlane    = {
-                          color:'rgb(200,200,200)',
-                          opacity:0.5,
-                          transparent:true,
-                          wireframe:true,
-                          side:tr.DoubleSide
+                          color:'rgb(200,200,200)'
+                        , opacity:0.5
+                        , transparent:true
+                        , wireframe:true
+                        , side:tr.DoubleSide
                         }
 
 const hexVerticesValue = hexVertices()

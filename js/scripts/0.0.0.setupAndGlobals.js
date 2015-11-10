@@ -30,7 +30,7 @@ camera.controls.mouse.leftClick = false
 camera.controls.mouse.moving    = false
 camera.controls.mouse.movementX = 0
 camera.controls.mouse.movementY = 0
-camera.controls.mouse.rotationSpeed = 0.01
+camera.controls.mouse.rotationSpeed = 0.005
 
 
 function onDocumentKeyDown (event) {

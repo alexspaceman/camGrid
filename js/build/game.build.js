@@ -32,7 +32,7 @@ camera.controls.mouse.leftClick = false;
 camera.controls.mouse.moving = false;
 camera.controls.mouse.movementX = 0;
 camera.controls.mouse.movementY = 0;
-camera.controls.mouse.rotationSpeed = 0.01;
+camera.controls.mouse.rotationSpeed = 0.005;
 
 function onDocumentKeyDown(event) {
   var keyCode = event.which;
@@ -130,12 +130,8 @@ function objNumber() {
 
 // GEOMETRY HELPERS
 function hexVertices(options) {
-  if (!options) {
-    options = {};
-  }
-  if (!options.gridCellWidth) {
-    options.gridCellWidth = 1;
-  }
+  options = options || {};
+  options.gridCellWidth = options.gridCellWidth || 1;
 
   var vertices = [new tr.Vector3(0, 0, 0), new tr.Vector3(2 * options.gridCellWidth, 3 * options.gridCellWidth, 0), new tr.Vector3(4 * options.gridCellWidth, 0, 0), new tr.Vector3(2 * options.gridCellWidth, -3 * options.gridCellWidth, 0), new tr.Vector3(-2 * options.gridCellWidth, -3 * options.gridCellWidth, 0), new tr.Vector3(-4 * options.gridCellWidth, 0, 0), new tr.Vector3(-2 * options.gridCellWidth, 3 * options.gridCellWidth, 0)];
 
@@ -246,40 +242,26 @@ function generatePlane(geometry, material, objectName) {
 function generateHex(objName, objSize, objColor, wireOn) {
   var geometry = new tr.Geometry();
 
-  geometry.vertices.push(new THREE.Vector3(0, 0, 0), new THREE.Vector3(2 * objSize, 3 * objSize, 0), new THREE.Vector3(4 * objSize, 0, 0), new THREE.Vector3(2 * objSize, -3 * objSize, 0), new THREE.Vector3(-2 * objSize, -3 * objSize, 0), new THREE.Vector3(-4 * objSize, 0, 0), new THREE.Vector3(-2 * objSize, 3 * objSize, 0));
-  geometry.faces.push(new THREE.Face3(0, 1, 2), new THREE.Face3(0, 2, 3), new THREE.Face3(0, 3, 4), new THREE.Face3(0, 4, 5), new THREE.Face3(0, 5, 6), new THREE.Face3(0, 6, 1));
+  geometry.vertices.push(new tr.Vector3(0, 0, 0), new tr.Vector3(2 * objSize, 3 * objSize, 0), new tr.Vector3(4 * objSize, 0, 0), new tr.Vector3(2 * objSize, -3 * objSize, 0), new tr.Vector3(-2 * objSize, -3 * objSize, 0), new tr.Vector3(-4 * objSize, 0, 0), new tr.Vector3(-2 * objSize, 3 * objSize, 0));
+  geometry.faces.push(new tr.Face3(0, 1, 2), new tr.Face3(0, 2, 3), new tr.Face3(0, 3, 4), new tr.Face3(0, 4, 5), new tr.Face3(0, 5, 6), new tr.Face3(0, 6, 1));
 
-  var material = new THREE.MeshBasicMaterial({
-    color: objColor, wireframe: wireOn, side: THREE.DoubleSide
+  var material = new tr.MeshBasicMaterial({
+    color: objColor, wireframe: wireOn, side: tr.DoubleSide
   });
 
-  var newGameObject = new THREE.Mesh(geometry, material);
+  var newGameObject = new tr.Mesh(geometry, material);
   newGameObject.name = objName;
   scene.add(newGameObject);
 }
 
 function generateHex_new(options) {
-  if (!options) {
-    options = {};
-  }
-  if (!options.name) {
-    options.name = 'hex' + objNumber();
-  }
-  if (!options.id) {
-    options.id = objNumber();
-  }
-  if (!options.size) {
-    options.size = 1;
-  }
-  if (!options.origin) {
-    new tr.Vector3(0, 0, 0);
-  }
-  if (!options.vertices) {
-    options.vertices = hexVerticesValue;
-  }
-  if (!options.material) {
-    options.material = defaultWFMaterial;
-  }
+  options = options || {};
+  options.name = options.name || 'hex' + objNumber();
+  options.id = options.id || objNumber();
+  options.size = options.size || 1;
+  options.origin = options.origin || new tr.Vector3(0, 0, 0);
+  options.vertices = options.vertices || hexVerticesValue;
+  options.material = options.material || defaultWFMaterial;
 
   var geometry = new tr.Geometry();
 
@@ -287,8 +269,8 @@ function generateHex_new(options) {
 
   geometry.faces.push(new tr.Face3(0, 1, 2), new tr.Face3(0, 2, 3), new tr.Face3(0, 3, 4), new tr.Face3(0, 4, 5), new tr.Face3(0, 5, 6), new tr.Face3(0, 6, 1));
 
-  var material = new THREE.MeshBasicMaterial(options.material);
-  var newGameObject = new THREE.Mesh(geometry, material);
+  var material = new tr.MeshBasicMaterial(options.material);
+  var newGameObject = new tr.Mesh(geometry, material);
   newGameObject.name = options.name;
   newGameObject.objId = options.id;
   scene.add(newGameObject);
@@ -302,30 +284,18 @@ var gridHelper = new tr.GridHelper(100, 2);
 scene.add(gridHelper);
 gridHelper.setColors('rgb(250,200,100)', 'rgb(120,120,80)');
 
-var gridSize = 10;
-
-generateHex_new({ name: '0,0' });
-getObjectByName('0,0').rotation.x = toRadians(90);
-// getObjectByName('0,0').rotation.z = toRadians(90)
-// getObjectById(2).translateX(6)
-// getObjectById(2).translateY(-4)
-
-// generateHex_new({name:'1,0'})
-// getObjectById(3).rotation.x = toRadians(90)
-
-// for (let i = 1; i < gridSize; i++) {
-//   let objectId = i + 1
-//   generateHex_new()
-//   getObjectById(objectId).rotation.x = toRadians(90)
-// }
-
 // ========== GRID CREATION / end ============
 // ========== SCENE CREATION / start ==========
 // OBJECT/SCENE GENERATION
 
-// OBJECT/SCENE MODIFICATION
-"use strict";
+// creating grid
+'use strict';
 
+var gridSize = 10;
+generateHex_new({ name: '0,0' });
+getObjectByName('0,0').rotation.x = toRadians(90);
+
+// OBJECT/SCENE MODIFICATION
 camera.position.z = 5;
 camera.position.y = 35;
 camera.rotation.x = toRadians(-75);

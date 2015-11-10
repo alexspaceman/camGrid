@@ -79,70 +79,56 @@ function generateHex (objName, objSize, objColor, wireOn) {
   let geometry = new tr.Geometry()
 
   geometry.vertices.push(
-    new THREE.Vector3(0, 0, 0),
-    new THREE.Vector3(2*objSize, 3*objSize, 0),
-    new THREE.Vector3(4*objSize, 0, 0),
-    new THREE.Vector3(2*objSize, -3*objSize, 0),
-    new THREE.Vector3(-2*objSize, -3*objSize, 0),
-    new THREE.Vector3(-4*objSize, 0, 0),
-    new THREE.Vector3(-2*objSize, 3*objSize, 0)
+    new tr.Vector3(0, 0, 0)
+  , new tr.Vector3(2*objSize, 3*objSize, 0)
+  , new tr.Vector3(4*objSize, 0, 0)
+  , new tr.Vector3(2*objSize, -3*objSize, 0)
+  , new tr.Vector3(-2*objSize, -3*objSize, 0)
+  , new tr.Vector3(-4*objSize, 0, 0)
+  , new tr.Vector3(-2*objSize, 3*objSize, 0)
   )
   geometry.faces.push(
-    new THREE.Face3(0, 1, 2),
-    new THREE.Face3(0, 2, 3),
-    new THREE.Face3(0, 3, 4),
-    new THREE.Face3(0, 4, 5),
-    new THREE.Face3(0, 5, 6),
-    new THREE.Face3(0, 6, 1)
+    new tr.Face3(0, 1, 2)
+  , new tr.Face3(0, 2, 3)
+  , new tr.Face3(0, 3, 4)
+  , new tr.Face3(0, 4, 5)
+  , new tr.Face3(0, 5, 6)
+  , new tr.Face3(0, 6, 1)
   )
 
-  let material = new THREE.MeshBasicMaterial({
-    color:objColor, wireframe:wireOn, side:THREE.DoubleSide
+  let material = new tr.MeshBasicMaterial({
+    color:objColor, wireframe:wireOn, side:tr.DoubleSide
   })
 
-  let newGameObject = new THREE.Mesh(geometry, material)
+  let newGameObject = new tr.Mesh(geometry, material)
   newGameObject.name = objName
   scene.add(newGameObject)
 }
 
 function generateHex_new (options) {
-  if (!options) {
-    options = {}
-  }
-  if (!options.name) {
-    options.name = 'hex' + objNumber()
-  }
-  if (!options.id) {
-    options.id = objNumber()
-  }
-  if (!options.size) {
-    options.size = 1
-  }
-  if (!options.origin) {
-    new tr.Vector3(0, 0, 0)
-  }
-  if (!options.vertices) {
-    options.vertices = hexVerticesValue
-  }
-  if (!options.material) {
-    options.material = defaultWFMaterial
-  }
+  options = options || {}
+  options.name = options.name || 'hex' + objNumber()
+  options.id = options.id || objNumber()
+  options.size = options.size || 1
+  options.origin = options.origin || new tr.Vector3(0, 0, 0)
+  options.vertices = options.vertices || hexVerticesValue
+  options.material = options.material || defaultWFMaterial
 
   let geometry = new tr.Geometry()
 
   geometry.vertices = options.vertices
 
   geometry.faces.push(
-    new tr.Face3(0, 1, 2),
-    new tr.Face3(0, 2, 3),
-    new tr.Face3(0, 3, 4),
-    new tr.Face3(0, 4, 5),
-    new tr.Face3(0, 5, 6),
-    new tr.Face3(0, 6, 1)
+    new tr.Face3(0, 1, 2)
+  , new tr.Face3(0, 2, 3)
+  , new tr.Face3(0, 3, 4)
+  , new tr.Face3(0, 4, 5)
+  , new tr.Face3(0, 5, 6)
+  , new tr.Face3(0, 6, 1)
   )
 
-  let material = new THREE.MeshBasicMaterial(options.material)
-  let newGameObject = new THREE.Mesh(geometry, material)
+  let material = new tr.MeshBasicMaterial(options.material)
+  let newGameObject = new tr.Mesh(geometry, material)
   newGameObject.name = options.name
   newGameObject.objId = options.id
   scene.add(newGameObject)
