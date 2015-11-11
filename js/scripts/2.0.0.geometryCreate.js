@@ -17,6 +17,7 @@ function generateTriangle(vertices, material, objectName){
   scene.add(triangle)
 }
 
+// check new format, delete old format
 function generateTriangle_new (options) {
   options = options || {}
   options.name = options.name || 'triangle' + (scene.children.length)
@@ -47,6 +48,7 @@ function generateTriangle_new (options) {
   scene.add(triangle)
 }
 
+// rewrite to new format
 function generateCube(geometry, material, objectName){
   geometry = geometry || [1,1,1]
   geometry = new tr.BoxGeometry(...geometry)
@@ -61,6 +63,7 @@ function generateCube(geometry, material, objectName){
   scene.add(cube)
 }
 
+// rewrite to new format
 function generatePlane(geometry, material, objectName){
   geometry = geometry || [5,5]
   geometry = new tr.PlaneGeometry(geometry[0],geometry[1])
@@ -75,37 +78,7 @@ function generatePlane(geometry, material, objectName){
   scene.add(plane)
 }
 
-function generateHex (objName, objSize, objColor, wireOn) {
-  let geometry = new tr.Geometry()
-
-  geometry.vertices.push(
-    new tr.Vector3(0, 0, 0)
-  , new tr.Vector3(2*objSize, 3*objSize, 0)
-  , new tr.Vector3(4*objSize, 0, 0)
-  , new tr.Vector3(2*objSize, -3*objSize, 0)
-  , new tr.Vector3(-2*objSize, -3*objSize, 0)
-  , new tr.Vector3(-4*objSize, 0, 0)
-  , new tr.Vector3(-2*objSize, 3*objSize, 0)
-  )
-  geometry.faces.push(
-    new tr.Face3(0, 1, 2)
-  , new tr.Face3(0, 2, 3)
-  , new tr.Face3(0, 3, 4)
-  , new tr.Face3(0, 4, 5)
-  , new tr.Face3(0, 5, 6)
-  , new tr.Face3(0, 6, 1)
-  )
-
-  let material = new tr.MeshBasicMaterial({
-    color:objColor, wireframe:wireOn, side:tr.DoubleSide
-  })
-
-  let newGameObject = new tr.Mesh(geometry, material)
-  newGameObject.name = objName
-  scene.add(newGameObject)
-}
-
-function generateHex_new (options) {
+function generateHex (options) {
   options = options || {}
   options.name = options.name || 'hex' + objNumber()
   options.id = options.id || objNumber()

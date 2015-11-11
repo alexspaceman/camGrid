@@ -3,7 +3,7 @@
 
 // creating grid
 const gridSize = 10
-generateHex_new({name:'0,0'})
+generateHex({name:'0,0'})
 getObjectByName('0,0').rotation.x = toRadians(90)
 
 

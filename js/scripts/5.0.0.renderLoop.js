@@ -10,6 +10,11 @@ function render () {
   if (camera.controls.movement.y)   camera.position.y += camera.controls.movement.speed
   if (camera.controls.movement.y_)  camera.position.y -= camera.controls.movement.speed
 
+  if (controller.modifiers.shift) {
+    camera.controls.movement.speed = camera.controls.movement.speedBase * controller.modifiers.shiftSpeed
+  }
+  else camera.controls.movement.speed = camera.controls.movement.speedBase
+
   if (camera.controls.mouse.leftClick) {
     if (camera.controls.mouse.moving) {
       camera.rotation.y -= camera.controls.mouse.movementX * camera.controls.mouse.rotationSpeed

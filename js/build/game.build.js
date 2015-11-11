@@ -11,11 +11,9 @@ var renderer = new tr.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-document.addEventListener("keydown", onDocumentKeyDown, false);
-document.addEventListener("keyup", onDocumentKeyUp, false);
-document.addEventListener("mousedown", onDocumentMouseDown, false);
-document.addEventListener("mouseup", onDocumentMouseUp, false);
-
+// CONTROLS
+var controller = {};
+controller.modifiers = {};
 camera.controls = {};
 camera.controls.movement = {};
 camera.controls.mouse = {};
@@ -26,14 +24,27 @@ camera.controls.movement.x = false;
 camera.controls.movement.x_ = false;
 camera.controls.movement.y = false;
 camera.controls.movement.y_ = false;
-camera.controls.movement.speed = 0.1;
 
 camera.controls.mouse.leftClick = false;
 camera.controls.mouse.moving = false;
 camera.controls.mouse.movementX = 0;
 camera.controls.mouse.movementY = 0;
-camera.controls.mouse.rotationSpeed = 0.005;
 
+controller.modifiers.shift = false;
+
+// GLOBAL VARIABLES
+camera.controls.movement.speedBase = 0.1;
+camera.controls.movement.speed = camera.controls.movement.speedBase;
+camera.controls.mouse.rotationSpeed = 0.005;
+controller.modifiers.shiftSpeed = 5;
+
+// EVENT LISTENERS
+document.addEventListener("keydown", onDocumentKeyDown, false);
+document.addEventListener("keyup", onDocumentKeyUp, false);
+document.addEventListener("mousedown", onDocumentMouseDown, false);
+document.addEventListener("mouseup", onDocumentMouseUp, false);
+
+// EVENT FUNCTIONS
 function onDocumentKeyDown(event) {
   var keyCode = event.which;
   console.log(keyCode, 'key down');
@@ -47,10 +58,13 @@ function onDocumentKeyDown(event) {
       camera.controls.movement.x = true;break; // east
     case 65:
       camera.controls.movement.x_ = true;break; // west
-    case 81:
-      camera.controls.movement.y = true;break; // up
     case 69:
+      camera.controls.movement.y = true;break; // up
+    case 81:
       camera.controls.movement.y_ = true;break; // down
+
+    case 16:
+      controller.modifiers.shift = true;break; // shift
   }
 }
 
@@ -67,15 +81,18 @@ function onDocumentKeyUp(event) {
       camera.controls.movement.x = false;break; // east
     case 65:
       camera.controls.movement.x_ = false;break; // west
-    case 81:
-      camera.controls.movement.y = false;break; // up
     case 69:
+      camera.controls.movement.y = false;break; // up
+    case 81:
       camera.controls.movement.y_ = false;break; // down
+
+    case 16:
+      controller.modifiers.shift = false;break; // shift
   }
 }
 
 function onDocumentMouseDown(event) {
-  console.log(event, 'mouse down');
+  // console.log(event, 'mouse down')
 
   document.addEventListener("mousemove", onDocumentMouseMove, false);
 
@@ -83,7 +100,7 @@ function onDocumentMouseDown(event) {
 }
 
 function onDocumentMouseUp(event) {
-  console.log(event, 'mouse up');
+  // console.log(event, 'mouse up')
 
   document.removeEventListener("mousemove", onDocumentMouseMove, false);
 
@@ -92,12 +109,11 @@ function onDocumentMouseUp(event) {
 
 function onDocumentMouseMove(event) {
   // console.log(event)
+
   camera.controls.mouse.movementX = event.movementX;
   camera.controls.mouse.movementY = event.movementY;
   camera.controls.mouse.moving = true;
 }
-
-// GLOBAL VARIABLES
 
 // ========== SETUP AND GLOBALS / end ============
 // ========== GEOMETRY MODIFICATION / start ==========
@@ -183,6 +199,7 @@ function generateTriangle(vertices, material, objectName) {
   scene.add(triangle);
 }
 
+// check new format, delete old format
 function generateTriangle_new(options) {
   options = options || {};
   options.name = options.name || 'triangle' + scene.children.length;
@@ -211,6 +228,7 @@ function generateTriangle_new(options) {
   scene.add(triangle);
 }
 
+// rewrite to new format
 function generateCube(geometry, material, objectName) {
   geometry = geometry || [1, 1, 1];
   geometry = new (_bind.apply(tr.BoxGeometry, [null].concat(_toConsumableArray(geometry))))();
@@ -225,6 +243,7 @@ function generateCube(geometry, material, objectName) {
   scene.add(cube);
 }
 
+// rewrite to new format
 function generatePlane(geometry, material, objectName) {
   geometry = geometry || [5, 5];
   geometry = new tr.PlaneGeometry(geometry[0], geometry[1]);
@@ -239,22 +258,7 @@ function generatePlane(geometry, material, objectName) {
   scene.add(plane);
 }
 
-function generateHex(objName, objSize, objColor, wireOn) {
-  var geometry = new tr.Geometry();
-
-  geometry.vertices.push(new tr.Vector3(0, 0, 0), new tr.Vector3(2 * objSize, 3 * objSize, 0), new tr.Vector3(4 * objSize, 0, 0), new tr.Vector3(2 * objSize, -3 * objSize, 0), new tr.Vector3(-2 * objSize, -3 * objSize, 0), new tr.Vector3(-4 * objSize, 0, 0), new tr.Vector3(-2 * objSize, 3 * objSize, 0));
-  geometry.faces.push(new tr.Face3(0, 1, 2), new tr.Face3(0, 2, 3), new tr.Face3(0, 3, 4), new tr.Face3(0, 4, 5), new tr.Face3(0, 5, 6), new tr.Face3(0, 6, 1));
-
-  var material = new tr.MeshBasicMaterial({
-    color: objColor, wireframe: wireOn, side: tr.DoubleSide
-  });
-
-  var newGameObject = new tr.Mesh(geometry, material);
-  newGameObject.name = objName;
-  scene.add(newGameObject);
-}
-
-function generateHex_new(options) {
+function generateHex(options) {
   options = options || {};
   options.name = options.name || 'hex' + objNumber();
   options.id = options.id || objNumber();
@@ -292,7 +296,7 @@ gridHelper.setColors('rgb(250,200,100)', 'rgb(120,120,80)');
 'use strict';
 
 var gridSize = 10;
-generateHex_new({ name: '0,0' });
+generateHex({ name: '0,0' });
 getObjectByName('0,0').rotation.x = toRadians(90);
 
 // OBJECT/SCENE MODIFICATION
@@ -314,6 +318,10 @@ function render() {
   if (camera.controls.movement.x_) camera.position.x -= camera.controls.movement.speed;
   if (camera.controls.movement.y) camera.position.y += camera.controls.movement.speed;
   if (camera.controls.movement.y_) camera.position.y -= camera.controls.movement.speed;
+
+  if (controller.modifiers.shift) {
+    camera.controls.movement.speed = camera.controls.movement.speedBase * controller.modifiers.shiftSpeed;
+  } else camera.controls.movement.speed = camera.controls.movement.speedBase;
 
   if (camera.controls.mouse.leftClick) {
     if (camera.controls.mouse.moving) {
